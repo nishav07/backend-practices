@@ -13,28 +13,25 @@ app.set("view engine","ejs");
 app.use("/uploads",express.static(path.join(__dirname,"uploads")));
 
 
-function universal(req,res,next){
-    console.log("mai universal hu har jagh muh maarta hu")
-    next()
-}
-
-app.use(universal);
-
 app.listen(port,() => {
-    console.log(console.log(`app is running on http://localhost:${port}/`));
+    console.log(`app is running on http://localhost:${port}/`);
 })
 
-app.get("/" , (req,res) => {
-    res.render("index");
-})
-
-
-function isLoggedIn (req,res,next){
-    console.log("middleware chal rha hai")
+function universalMiddleware(req,res,next){
+    console.log("this is checking from universal middleware :)");
     next();
 }
 
-app.get("/home" ,isLoggedIn,(req,res) => {
-    console.log("particular middleware wala hai rest api")
-    res.send("hello world")
+app.use(universalMiddleware);
+
+function check(req,res,next){
+    console.log("welcome to home")
+    next();
+}
+app.get("/home",check,(req,res) => {
+    res.render("index")
+})
+
+app.get("/about",(req,res) => {
+    res.send("about page")
 })
