@@ -17,21 +17,29 @@ app.listen(port,() => {
     console.log(`app is running on http://localhost:${port}/`);
 })
 
-function universalMiddleware(req,res,next){
-    console.log("this is checking from universal middleware :)");
-    next();
-}
+// function universalMiddleware(req,res,next){
+//     console.log("this is checking from universal middleware :)");
+//     next();
+// }
 
-app.use(universalMiddleware);
+// app.use(universalMiddleware);
 
-function check(req,res,next){
+// function check(req,res,next){
+//     console.log("welcome to home")
+//     next();
+// }
+
+function greet(req,res,next){
     console.log("welcome to home")
-    next();
+    next()
 }
-app.get("/home",check,(req,res) => {
+
+app.use(greet);
+
+app.get("/",check,(req,res) => {
     res.render("index")
 })
 
-app.get("/about",(req,res) => {
+app.get("/dashboard",(req,res) => {
     res.send("about page")
 })
