@@ -38,14 +38,13 @@ function isLoggedIn(req,res,next){
     const user = req.query.user
     if(user === "admin"){
         console.log("admin verified")
-        res.redirect("/dashboard")
-        next()
+        next();
     } else {
         console.log("user detected")
         return res.redirect("/")
     }
 }
-// app.use(greet);
+
 
 app.get("/",(req,res) => {
     res.render("index")
@@ -54,5 +53,5 @@ app.get("/",(req,res) => {
 app.get("/dashboard",isLoggedIn,(req,res) => {
     const user = req.query.user
     console.log(user)
-    res.send("dashboard")
+    res.send("dashboard aa gya oyee")
 })
