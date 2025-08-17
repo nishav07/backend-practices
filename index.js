@@ -34,12 +34,25 @@ function greet(req,res,next){
     next()
 }
 
-app.use(greet);
+function isLoggedIn(req,res,next){
+    const user = req.query.user
+    if(user === "admin"){
+        console.log("admin verified")
+        res.redirect("/dashboard")
+        next()
+    } else {
+        console.log("user detected")
+        return res.redirect("/")
+    }
+}
+// app.use(greet);
 
-app.get("/",check,(req,res) => {
+app.get("/",(req,res) => {
     res.render("index")
 })
 
-app.get("/dashboard",(req,res) => {
-    res.send("about page")
+app.get("/dashboard",isLoggedIn,(req,res) => {
+    const user = req.query.user
+    console.log(user)
+    res.send("dashboard")
 })
